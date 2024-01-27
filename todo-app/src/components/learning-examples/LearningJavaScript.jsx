@@ -7,9 +7,9 @@ const person = {
   },
   profiles: ["twitter", "linkedin", "instagram"], //array in JS
   printProfile: () => {
-    person.profiles.map(profile) => console.log(profile));
-  },
-};
+    person.profiles.map(profile) => console.log(profile)
+  }
+}
 
 export default function LearningJavaScript() {
   return (
@@ -19,5 +19,5 @@ export default function LearningJavaScript() {
       <div>{person.profiles[0]}</div>
       <div>{person.printProfile()}</div>
     </>
-  );
+  )
 }
