@@ -18,32 +18,21 @@ function LoginComponent(){
 
     function handleUsernameChange(event) {
         console.log(event);
-        console.log(event.target.value);
         setUsername(event.target.value);
     }
 
     function handlePasswordChange(event) {
         console.log(event);
-        console.log(event.target.value);
         setPassword(event.target.value);
     }
 
     function handleSubmit() {
-        if (username==='jevina' && password==='dummy') {
-            authContext.setAuthenticated(true)
-            console.log('success');
-            setSuccess(true)
-            setFailure(false)
+        if (authContext.login(username,password)) {
             navigate(`/welcome/${username}`)
 
         }else{
-            authContext.setAuthenticated(true)
-            console.log('Failed');
-            setSuccess(false)
             setFailure(true)
         }
-        console.log(username);
-        console.log(password);
     }
 
     // function SuccessMessageComponent() {
