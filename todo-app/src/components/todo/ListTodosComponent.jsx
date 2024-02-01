@@ -15,15 +15,12 @@ export default function ListTodosComponent() {
         // {id: 3, description: 'Learn DevOps', done: false, targetDate:targetDate},
     //]
 
-    useEffect(
-        ()=>refreshTodos(),[]
-    )
+    useEffect(()=>refreshTodos(),[])
 
     function refreshTodos() {
         retrieveAllTodosForUsername('Jevina')
             .then(response => 
                 {
-                    console.log(response.data)
                     setTodos(response.data)
                 }
                 )
@@ -38,8 +35,8 @@ export default function ListTodosComponent() {
                 <table className="table">
                     <thead>
                             <tr>
-                                <td>id</td>
-                                <td>description</td>
+                                <td>ID</td>
+                                <td>Description</td>
                                 <td>Is Done?</td>
                                 <td>Target Date</td>
                             </tr>
