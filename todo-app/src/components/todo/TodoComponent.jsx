@@ -35,8 +35,18 @@ export default function TodoComponent() {
 
     function validate(values) {
         let errors= {
-            description:'Enter a valid description'
+            // description:'Enter a valid description',
+            // targetDate:'Enter a valid date'
         }
+
+        if (values.description.length<5) {
+            errors.description='Enter at least 5 characters'
+        }
+        if(values.targetDate==null){
+            errors.targetDate='Enter a target date'
+        }
+        
+        return errors
     }
 
   return (
@@ -47,6 +57,8 @@ export default function TodoComponent() {
             enableReinitialize = {true}
             onSubmit = {onSubmit}
             validate={validate}
+            validateOnChange={false}
+            validateOnBlur={false}
         >
             {
                 (props) => (
@@ -56,6 +68,12 @@ export default function TodoComponent() {
                             component="div"
                             className="alert alert-warning"
                         />
+                        <ErrorMessage 
+                            name = "targetDate"
+                            component="div"
+                            className="alert alert-warning"
+                        />
+
                         <fieldset className="form-group">
                             <label>Description</label>
                             <Field type="text" className="form-control" name="description"/>
