@@ -53,6 +53,11 @@ export default function ListTodosComponent() {
         navigate(`/todos/${id}`)
     }
 
+    function addNewTodo() {
+        navigate(`/todos/-1`)
+        console.log('clicked');
+    }
+
     return (
         <div className="container">
             <h1>Things You Want To Do!</h1>
@@ -81,14 +86,18 @@ export default function ListTodosComponent() {
                                                     onClick={() => deleteTodo(todo.id)}>Delete</button></td>
                                 <td><button className="btn btn-success" 
                                                     onClick={() =>updateTodo(todo.id)}>Update</button></td>
+                                
                                 </tr>
                             )
                         )
                     }
-
+                    
                     </tbody>
 
                 </table>
+                <div className="container">
+                    <button className="btn btn-success m-5"  onClick={() => addNewTodo()}>Create Todo</button>
+                </div>
             </div>
         </div>
     )
