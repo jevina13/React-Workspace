@@ -41,7 +41,7 @@ public class TodoResource {
 	
 	@PutMapping("/users/{username}/todos/{id}")				//used to update data/table
 	public Todo updateTodo(@PathVariable String username,
-								@PathVariable int id,@RequestBody Todo todo) {
+								@PathVariable int id, @RequestBody Todo todo) {
 		todoService.updateTodo(todo);
 		return todo;		
 	}
