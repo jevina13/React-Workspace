@@ -1,4 +1,4 @@
-package com.jev.webservices.restfulwebservices.jwt;
+package jev.webservices.restfulwebservices.jwt;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -49,9 +49,9 @@ public class JwtSecurityConfig {
         // https://github.com/spring-projects/spring-security/issues/12310
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/authenticate").permitAll()
+                    .antMatchers("/authenticate").permitAll()
                     .requestMatchers(PathRequest.toH2Console()).permitAll() // h2-console is a servlet and NOT recommended for a production
-                    .requestMatchers(HttpMethod.OPTIONS,"/**")
+                    .antMatchers(HttpMethod.OPTIONS,"/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
@@ -77,7 +77,7 @@ public class JwtSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("in28minutes")
+        UserDetails user = User.withUsername("jevina")
                                 .password("{noop}dummy")
                                 .authorities("read")
                                 .roles("USER")
@@ -128,8 +128,4 @@ public class JwtSecurityConfig {
                     "Unable to generate an RSA Key Pair", e);
         }
     }
-    
 }
-
-
-```

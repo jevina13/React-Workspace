@@ -1,4 +1,4 @@
-package com.jev.webservices.restfulwebservices.jwt;
+package jev.webservices.restfulwebservices.jwt;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
