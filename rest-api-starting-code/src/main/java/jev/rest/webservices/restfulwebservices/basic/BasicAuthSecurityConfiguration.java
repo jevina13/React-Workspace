@@ -26,17 +26,16 @@ public class BasicAuthSecurityConfiguration {
 							auth
 								.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()			//access to preflight req
 								.anyRequest().authenticated();
-						});
+						}
+						);
 		http.httpBasic(Customizer.withDefaults());
 		http.sessionManagement(
-				session -> 
-					session.sessionCreationPolicy(
-							SessionCreationPolicy.STATELESS)
-				);
+				session ->session.sessionCreationPolicy
+				(SessionCreationPolicy.STATELESS));
 		
 		http.csrf(csrf -> csrf.disable());
 		
-		http.headers(headers -> headers.frameOptions(frameOptionsConfig-> frameOptionsConfig.disable()));
+		//http.headers(headers -> headers.frameOptions(frameOptionsConfig-> frameOptionsConfig.disable()));
 		
 		
 		return http.build();

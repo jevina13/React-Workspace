@@ -1,5 +1,6 @@
 import {createContext,useContext,useState} from 'react';
 import { executeAuthenticationService } from "../api/HelloWorldApiService";
+import { apiClient } from "../api/ApiClient";
 
 //Create Context
 export const AuthContext = createContext()
@@ -12,6 +13,7 @@ export default function AuthProvider({children}) {
     
     //Put some state in context
     const [number,setNumber] = useState(10)
+    const [token,setToken] = useState(10)
 
     const [isAuthenticated,setAuthenticated] = useState(false)
 
@@ -29,35 +31,52 @@ export default function AuthProvider({children}) {
     //     }
     // }
 
-    function login(username, password){
+    async function login(username, password){
         //creating a dynamic token tobe passed for authentication and then encoding it
         const baToken = 'Basic ' + window.btoa(username+":"+password)
+        try{
 
-        executeAuthenticationService(baToken)
-        .then(response =>console.log(response))
-        .catch(error => console.log(error))
+            const response = await executeAuthenticationService(baToken)
+       
 
-        setAuthenticated(false)
+            if (response.status==200) {
+                setAuthenticated(true)
+                setUsername(username)
+                setToken(baToken)
 
-        if (username==='jevina' && password==='dummy') {
-            setAuthenticated(true)
-            setUsername(username)
-            return true
-        }else{
-            setAuthenticated(false)
-            setUsername(null)
-            return false
+                //the interceptor makes sure we pass the authorization token to any api call
+                apiClient.interceptors.request.use(
+                    (config) =>{
+                        console.log('intercepting and adding a token')
+                        config.headers.Authorization = baToken
+                        return config
+                    }
+                )
+
+                return true
+            }else{
+                logout()
+                return false
+            }
         }
+        catch(error){
+            setAuthenticated(false)
+                setUsername(null)
+                return false
+        }
+        
     }
 
     function logout(){
         setAuthenticated(false)
+        setUsername(null)
+        setToken(null)
     }
 
     //setInterval(() => setNumber(number+1), 10000);
     //const valueToBeShared = {number, isAuthenticated,setAuthenticated}
     return(
-        <AuthContext.Provider value={{number, isAuthenticated,login,logout, username}}>
+        <AuthContext.Provider value={{number, isAuthenticated,login,logout, username, token}}>
             {children}
         </AuthContext.Provider>
     )
