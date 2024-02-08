@@ -24,7 +24,7 @@ public class BasicAuthSecurityConfiguration {
 		http.authorizeHttpRequests(
 						auth -> {
 							auth
-								.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()			//access to preflight req
+								.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()			//access to preflight req
 								.anyRequest().authenticated();
 						}
 						);
