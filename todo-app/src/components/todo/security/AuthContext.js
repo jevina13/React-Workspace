@@ -12,8 +12,8 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthProvider({children}) {
     
     //Put some state in context
-    const [number,setNumber] = useState(10)
-    const [token,setToken] = useState(10)
+    const [number,setNumber] = useState(null)   //changed (10) to (nul in both)
+    const [token,setToken] = useState(null)
 
     const [isAuthenticated,setAuthenticated] = useState(false)
 
@@ -36,7 +36,7 @@ export default function AuthProvider({children}) {
         const baToken = 'Basic ' + window.btoa(username+":"+password)
         try{
 
-            const response = await executeAuthenticationService(baToken)
+            const response = await executeAuthenticationService(baToken)        //await - waits for code to get successful and stores in resp
        
 
             if (response.status==200) {

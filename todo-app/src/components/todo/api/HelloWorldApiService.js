@@ -12,7 +12,7 @@ export const retrieveHelloWorldBean
 //Response to preflight req doesn't pass access control check => Authorization header
 export const retrieveHelloWorldPath
     =(username, token)=> apiClient.get(`/hello-world/path-variable/${username}`,
-    // {
+     // {
     //     headers: {
     //         Authorization: token
     //     }
