@@ -1,4 +1,4 @@
-package jev.webservices.restfulwebservices.jwt;
+package jev.rest.webservices.restfulwebservices.jwt;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

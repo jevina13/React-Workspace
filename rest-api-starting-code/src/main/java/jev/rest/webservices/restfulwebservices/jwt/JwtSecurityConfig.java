@@ -1,4 +1,4 @@
-package jev.webservices.restfulwebservices.jwt;
+package jev.rest.webservices.restfulwebservices.jwt;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -77,7 +77,7 @@ public class JwtSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("in28minutes")
+        UserDetails user = User.withUsername("jevina")
                                 .password("{noop}dummy")
                                 .authorities("read")
                                 .roles("USER")
@@ -128,4 +128,5 @@ public class JwtSecurityConfig {
                     "Unable to generate an RSA Key Pair", e);
         }
     }
+    
 }
