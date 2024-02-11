@@ -8,3 +8,7 @@ export const executeAuthenticationService
         }
     }
 )
+
+//passes username and password to generate jwt token
+export const executeJwtAuthenticationService
+    =(username, password)=> apiClient.post(`/authenticate`,{username,password})
