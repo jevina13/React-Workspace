@@ -1,41 +1,60 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes,Route, useNavigate,useParams, Link } from "react-router-dom";
-import {AuthContext, useAuth} from './security/AuthContext' 
+import {useNavigate} from 'react-router-dom'
+import { useAuth } from './security/AuthContext'
 
+function LoginComponent() {
 
-function LoginComponent(){
+    const [username, setUsername] = useState('jevina')
 
-    const [username,setUsername] = useState('jevina')
+    const [password, setPassword] = useState('')
 
-    const [password,setPassword] = useState('')
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-    const [showSuccess,setSuccess] = useState(false)
-    const [showFailure,setFailure] = useState(false)
+    const navigate = useNavigate()
 
-    const navigate = useNavigate();
     const authContext = useAuth()
 
-
     function handleUsernameChange(event) {
-        console.log(event);
-        setUsername(event.target.value);
+        setUsername(event.target.value)
     }
 
     function handlePasswordChange(event) {
-        console.log(event);
-        setPassword(event.target.value);
+        setPassword(event.target.value)
     }
 
     async function handleSubmit() {
-        if (await authContext.login(username,password)) {
+        if(await authContext.login(username, password)){
             navigate(`/welcome/${username}`)
-
-        }else{
-            setFailure(true)
+        } else {
+            setShowErrorMessage(true)
         }
     }
 
-    // function SuccessMessageComponent() {
+    return (
+        <div className="Login">
+            <h1>Time to Login!</h1>
+            {showErrorMessage && <div className="errorMessage">Authentication Failed. 
+                                                            Please check your credentials.</div>}
+            <div className="LoginForm">
+                <div>
+                    <label>User Name:</label>
+                    <input type="text" name="username" value={username} onChange={handleUsernameChange}/>
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" name="password" value={password} onChange={handlePasswordChange}/>
+                </div>
+                <div>
+                    <button type="button" name="login" onClick={handleSubmit}>login</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default LoginComponent
+
+// function SuccessMessageComponent() {
 
     //     if(showSuccess) {
     //         return <div className="successMessage">Authenticated Successfully</div>
@@ -52,32 +71,3 @@ function LoginComponent(){
         
     //     return null   
     // }
-
-    return(
-        
-        <div className="Login">
-            <h1>Login to the web</h1>
-            <div className="LoginForm">
-            {showSuccess && <div className="successMessage">Authenticated Successfully</div>}   {/* this will only print if showSuccess is true*/}
-            {showFailure && <div className="errorMessage">Authentication Failed. 
-                                                Please check your credentials.</div>}
-                <div>
-                    <label htmlFor="">Username:</label>
-                    <input type="text" name="username" 
-                    value={username} onChange={handleUsernameChange}/>
-                </div>
-                <div>
-                    <label htmlFor="">Password:</label>
-                    <input type="password" name="password" 
-                    value={password} onChange={handlePasswordChange}/>
-                </div>
-                <div>
-                    <button type="button" name="login" 
-                    onClick={handleSubmit}>Login</button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default LoginComponent

@@ -27,8 +27,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
-import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
@@ -50,53 +48,30 @@ public class JwtSecurityConfig {
         // h2-console is a servlet 
         // https://github.com/spring-projects/spring-security/issues/12310
         return httpSecurity
-        		.headers(headers -> headers.frameOptions().disable())
-
-                .csrf(AbstractHttpConfigurer::disable) // (1)
-
-                .sessionManagement(
-
-                        session ->
-
-                            session.sessionCreationPolicy(
-
-                                SessionCreationPolicy.STATELESS)) // (2)
+                .headers(headers -> headers.frameOptions().disable())
 
                 .authorizeHttpRequests(
-
-                        auth ->
-
-                            auth.requestMatchers("/authenticate", "/actuator", "/actuator/*")
-
-                                .permitAll()
-                                .requestMatchers(PathRequest.toH2Console())
-                                .permitAll()
-                                .requestMatchers("/h2-console/**")
-                                .permitAll()                       
-                                .requestMatchers(HttpMethod.OPTIONS,"/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()) // (3)
+                		auth -> 
+                		auth.requestMatchers("/authenticate")
+                		.permitAll()
+//                    .requestMatchers(PathRequest.toH2Console()).permitAll() // h2-console is a servlet and NOT recommended for a production
+                		.requestMatchers("/h2-console/**")
+                		.permitAll()
+                		.requestMatchers(HttpMethod.OPTIONS,"/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(
+                		session -> 
+                		session.sessionCreationPolicy(
+                				SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(
-
-                        OAuth2ResourceServerConfigurer::jwt) // (4)
-
-                .exceptionHandling(
-
-                        (ex) ->
-
-                            ex.authenticationEntryPoint(
-
-                                new BearerTokenAuthenticationEntryPoint())
-
-                              .accessDeniedHandler(
-
-                                new BearerTokenAccessDeniedHandler()))
-
+                        OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(
-
-                        Customizer.withDefaults()) // (5)
-
+                        Customizer.withDefaults())
+//                .headers(header -> {header.
+//                    frameOptions().sameOrigin();})
                 .build();
     }
 

@@ -32,10 +32,12 @@ function logout() {
                     </div>
                     <ul className="navbar-nav">
                         <li className="nav-item fs-5">
-                            {!isAuthenticated && <Link className="nav-link" to="/login">Login</Link>}
+                            {!isAuthenticated && 
+                            <Link className="nav-link" to="/login">Login</Link>}
                         </li>
                         <li className="nav-item fs-5">
-                            {isAuthenticated && <Link className="nav-link" to="/logout" onClick={logout}>Logout</Link>}
+                            {isAuthenticated && 
+                            <Link className="nav-link" to="/logout" onClick={logout}>Logout</Link>}
                         </li>
                     </ul>
                 </nav>
